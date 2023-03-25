@@ -1,4 +1,4 @@
-export HISTORY_FILTER_VERSION="0.4.1"
+export HISTORY_FILTER_VERSION="0.5.0"
 
 # overwrite the history file so that it
 # retro-actively applies the currently set filters
@@ -14,15 +14,20 @@ function rewrite_history() {
             echo "$entry" >> "$new_history"
         else
             ((excluded = excluded + 1))
-            printf "\rExcluded $excluded entries"
+            printf "\rExcluded $excluded entries\n"
         fi
     done
-    printf "\n"
     mv "$new_history" "$HISTFILE"
 }
 
 
 function _matches_filter() {
+    # filter commands with <= 4 characters
+    if [[ ${#1} -le 5 ]]; then
+      echo Command is less than 4, not adding to history
+      return 0
+    fi
+
     local value
     for value in $HISTORY_FILTER_EXCLUDE; do
         if [[ "$1" = *"$value"* ]]; then
