@@ -24,7 +24,6 @@ function rewrite_history() {
 function _matches_filter() {
     # filter commands with <= 4 characters
     if [[ ${#1} -le 5 ]]; then
-      echo Command is less than 4, not adding to history
       return 0
     fi
 
@@ -40,7 +39,7 @@ function _matches_filter() {
 
 function _history_filter() {
     if _matches_filter "$1"; then
-        if [[ -z "$HISTORY_FILTER_SILENT" ]]; then
+        if [[ ! -z "$HISTORY_FILTER_DEBUG" ]]; then
             (>&2 printf "Excluding command from history\n")
         fi
         return 2

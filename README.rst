@@ -12,6 +12,11 @@ Particularly useful for preventing secrets being written.
 * Contributing_
 * `Running Tests`_
 
+About this fork
+-----
+
+Adds a rule that prevents commands to be added to the history when the length of the command is less than 5 characters.
+
 Usage
 -----
 
